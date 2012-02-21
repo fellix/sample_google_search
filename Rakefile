@@ -2,6 +2,7 @@ require 'yaml'
 require 'logger'
 require 'active_record'
 require './lib/google_search'
+require 'csv'
 
 namespace :db do
   def create_database config
@@ -93,6 +94,14 @@ namespace :search do
   end
   
   task :csv => "db:configure_connection" do
-    
+    puts "exporting file"
+    CSV_FILE_PATH = File.join(File.dirname(__FILE__), "search_results.csv")
+    CSV.open(CSV_FILE_PATH, "w") do |csv|
+      csv << %w[Keyword Position URL Title Description]
+      SearchItem.all.each do |item|
+        csv << [item.keyword, item.position, item.url, item.title, item.description]
+      end
+      puts "Report generated at #{CSV_FILE_PATH}"
+    end
   end
 end
