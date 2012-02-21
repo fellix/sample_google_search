@@ -11,18 +11,19 @@ class Search
   def results
     items = []
     @keywords.each do |keyword|
-      2.times { |page| items.concat(google_search keyword, page+1) }
+      keyword_items = []
+      2.times { |page| keyword_items.concat(google_search keyword, page+1, keyword_items.size) }
+      items.concat keyword_items
     end
     items
   end
   
   private
-  def google_search keyword, page=1
+  def google_search keyword, page=1, offset
     document = Nokogiri::HTML open request_url({q: keyword, page: page})
     items = []
     document.css("li.g").each_with_index do |doc, i|
-      position = i+1
-      (page-1).times { position += RESULTS_PER_PAGE }
+      position = i+1+offset
       items << Google::Item.new(doc, position, keyword) 
     end
     items
