@@ -27,9 +27,7 @@ class Search
   
   def request_url params={}
     raise InvalidQuery unless params[:q]
-    params.merge!(num: RESULTS_PER_PAGE)
-    page = params[:page] || 1
-    params.merge!(start: page == 1 ? 1 : (RESULTS_PER_PAGE+page-1))
+    params = validate_params params
     search_term = convert_query_to_search_term(params[:q])
     query = "?q=#{search_term}"
     params.each do |param, value|
@@ -37,6 +35,13 @@ class Search
       query += "&#{param}=#{value}"
     end
     "#{GOOGLE_URL}#{query}"
+  end
+  
+  def validate_params params
+    params.merge!(num: RESULTS_PER_PAGE)
+    page = params[:page] || 1
+    params.merge!(start: page == 1 ? 1 : (RESULTS_PER_PAGE+page-1))
+    params
   end
   
   def convert_query_to_search_term query
