@@ -21,7 +21,9 @@ class Search
     document = Nokogiri::HTML open request_url({q: keyword, page: page})
     items = []
     document.css("li.g").each_with_index do |doc, i|
-      items << Google::Item.new(doc, (i+1), keyword) 
+      position = i+1
+      (page-1).times { position += RESULTS_PER_PAGE }
+      items << Google::Item.new(doc, position, keyword) 
     end
     items
   end
