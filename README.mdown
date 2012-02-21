@@ -4,13 +4,13 @@
  
 ## Setting up
  
- bundle install
- rake db:create
- rake db:migrate
+ - bundle install
+ - rake db:create
+ - rake db:migrate
  
 ## Executing
 
- rake search:start
- rake search:csv
+ - rake search:start
+ - rake search:csv
  
  the last one exports in a csv file the search output
