@@ -1,0 +1,16 @@
+== GoogleSearch Sample
+
+ A very simple app which reads a XML containing some keywords and search at google collecting 200 entries for each keyword, the results are stored in a mysql dabase.
+ 
+ === Setting up
+ 
+ bundle install
+ rake db:create
+ rake db:migrate
+ 
+=== Executing
+
+ rake search:start
+ rake search:csv
+ 
+ the last one exports in a csv file the search output
