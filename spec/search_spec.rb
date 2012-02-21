@@ -7,8 +7,8 @@ describe Search do
   
   describe "searching at google" do
     before do
-      FakeWeb.register_uri :get, "http://www.google.com/search?q=seo+software&num=100&start=1"  , body: File.read("./spec/seo_software1.html")
-      FakeWeb.register_uri :get, "http://www.google.com/search?q=seo+software&num=100&start=101", body: File.read("./spec/seo_software2.html")
+      FakeWeb.register_uri :get, "http://www.google.com/search?q=seo%20software&num=100&start=1"  , body: File.read("./spec/seo_software1.html")
+      FakeWeb.register_uri :get, "http://www.google.com/search?q=seo%20software&num=100&start=101", body: File.read("./spec/seo_software2.html")
       @items = subject.results
     end
     it "should hit the google server and parser the response" do

@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'uri'
 class Search
   GOOGLE_URL = "http://www.google.com/search"
   RESULTS_PER_PAGE = 100
@@ -45,7 +46,7 @@ class Search
   end
   
   def convert_query_to_search_term query
-    query.gsub " ", "+"
+    URI.encode query
   end
   
   class InvalidQuery < StandardError; end

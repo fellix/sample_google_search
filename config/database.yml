@@ -1,0 +1,7 @@
+development:
+  adapter: mysql
+  user: root
+  password:
+  database: engine_dev
+  host: localhost
+  logger: false

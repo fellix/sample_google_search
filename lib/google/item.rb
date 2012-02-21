@@ -12,15 +12,20 @@ module Google
     end
     
     def url
-      @document.css("div.s div.kv cite").text
+      uri = Addressable::URI.parse(@document.css("h3.r a").first['href'])
+      uri.query_values["q"]
     end
     
     def description
-      @document.css("div.s span.st").text
+      @document.css("div.s").text
     end
     
     def to_s
       "#{position} - #{title}"
+    end
+    
+    def to_search_item
+      SearchItem.new title: title, url: url, description: description, position: position, keyword: keyword
     end
   end
 end
